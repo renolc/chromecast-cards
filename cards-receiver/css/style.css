@@ -1,5 +1,11 @@
-body {
-  background: black;
+* {
   margin: 0;
   padding: 0;
+}
+
+.rendererView {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
 }

@@ -3,10 +3,11 @@ var PIXIRenderer,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 PIXIRenderer = (function() {
-  function PIXIRenderer(bgColor, width, height) {
+  function PIXIRenderer(bgColor) {
     this.animate = __bind(this.animate, this);
     this.stage = new PIXI.Stage(bgColor);
-    this.renderer = PIXI.autoDetectRenderer(width, height);
+    this.renderer = PIXI.autoDetectRenderer();
+    this.renderer.view.className = 'rendererView';
     document.body.appendChild(this.renderer.view);
     requestAnimFrame(this.animate);
   }
