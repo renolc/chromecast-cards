@@ -1,5 +1,8 @@
 namespace = 'urn:x-cast:com.renolc.cards'
 appid = 'E1B87031'
+input = document.getElementById("text")
+submit = document.getElementById("submit")
+session = null
 
 window['__onGCastApiAvailable'] = (loaded, errorInfo) ->
   if loaded
@@ -20,6 +23,7 @@ receiverListener = (e) ->
   console.log e
 
 sessionListener = (e) ->
+  session = e
   console.log 'sessionListener'
   console.log e
 
@@ -29,3 +33,6 @@ onInitSuccess = ->
 onError = (e) ->
   console.log 'onError'
   console.log e
+
+submit.onclick = ->
+  session.sendMessage(namespace, {'bork': input.value})

@@ -9,11 +9,13 @@ castMessageBus = castReceiverManager.getCastMessageBus(namespace, cast.receiver.
 
 castMessageBus.onMessage = function(event) {
   console.log('--message received--');
-  return console.log(event);
+  console.log(event);
+  return document.body.innerHTML += event.data.bork + '<br>';
 };
 
 castReceiverManager.onSenderDisconnected = function(event) {
-  return console.log('onSenderDisconnected');
+  console.log('onSenderDisconnected');
+  return window.close();
 };
 
 castReceiverManager.start();

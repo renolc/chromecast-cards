@@ -7,9 +7,11 @@ castMessageBus = castReceiverManager.getCastMessageBus(namespace,
 castMessageBus.onMessage = (event) ->
   console.log '--message received--'
   console.log event
+  document.body.innerHTML += event.data.bork + '<br>'
 
 castReceiverManager.onSenderDisconnected = (event) ->
   console.log ('onSenderDisconnected')
+  window.close()
 
 castReceiverManager.start()
 
