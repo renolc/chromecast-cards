@@ -1,6 +1,5 @@
 namespace = 'urn:x-cast:com.renolc.cards'
 appid = 'E1B87031'
-input = document.getElementById("text")
 submit = document.getElementById("submit")
 session = null
 
@@ -19,20 +18,16 @@ init = ->
 
 
 receiverListener = (e) ->
-  console.log 'receiverListener'
-  console.log e
+  # TODO: do something
 
 sessionListener = (e) ->
   session = e
-  console.log 'sessionListener'
-  console.log e
 
 onInitSuccess = ->
-  console.log 'onInitSuccess'
+  # TODO: do something
 
 onError = (e) ->
-  console.log 'onError'
-  console.log e
+  # TODO: do something
 
 submit.onclick = ->
-  session.sendMessage(namespace, {'bork': input.value})
+  session.sendMessage(namespace, true)
