@@ -65,18 +65,18 @@ PIXI methods
 
 throw_card = (value, suit, side) ->
   if !value?
-    value = values[Math.round(Math.random() * (values.length - 1))]
+    value = values.random()
 
   if !suit?
-    suit = suits[Math.round(Math.random() * (suits.length - 1))]
+    suit = suits.random()
 
   if !side?
-    side = sides[Math.round(Math.random() * (sides.length - 1))]
+    side = sides.random()
 
   card = create_card(value, suit)
 
-  random_offset_x = Math.random() * 100 - 50
-  random_offset_y = Math.random() * 100 - 50
+  random_offset_x = Math.randomBetween(-50, 50)
+  random_offset_y = Math.randomBetween(-50, 50)
 
   switch side
     when 'bottom'
@@ -96,14 +96,16 @@ throw_card = (value, suit, side) ->
 
   stage.addChild(card)
 
-  new TWEEN.Tween(card)
-    .to({
-      x:        window.innerWidth  / 2 + random_offset_x,
-      y:        window.innerHeight / 2 + random_offset_y,
-      rotation: Math.random() * 10 - 5
-    }, 850)
-    .easing(TWEEN.Easing.Circular.Out)
-    .start()
+  setTimeout(->
+    new TWEEN.Tween(card)
+      .to({
+        x:        window.innerWidth  / 2 + random_offset_x,
+        y:        window.innerHeight / 2 + random_offset_y,
+        rotation: Math.randomBetween(-5, 5)
+      }, 850)
+      .easing(TWEEN.Easing.Circular.Out)
+      .start()
+  , 200)
 
 create_card = (value, suit) ->
   card = new PIXI.Sprite.fromImage("img/cards/#{value}_of_#{suit}.png")
@@ -131,5 +133,16 @@ Chromecast methods
 
 on_message = (event) ->
   throw_card(event.data.value, event.data.suit, event.data.side)
+
+###
+Util methods
+###
+
+Array.prototype.random = ->
+  return if this.length == 0
+  this[Math.floor(Math.random() * this.length)]
+
+Math.randomBetween = (min, max) ->
+  return Math.random() * (max - min) + min
 
 init()

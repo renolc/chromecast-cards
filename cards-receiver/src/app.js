@@ -41,17 +41,17 @@ PIXI methods
 throw_card = function(value, suit, side) {
   var card, random_offset_x, random_offset_y, x, y;
   if (value == null) {
-    value = values[Math.round(Math.random() * (values.length - 1))];
+    value = values.random();
   }
   if (suit == null) {
-    suit = suits[Math.round(Math.random() * (suits.length - 1))];
+    suit = suits.random();
   }
   if (side == null) {
-    side = sides[Math.round(Math.random() * (sides.length - 1))];
+    side = sides.random();
   }
   card = create_card(value, suit);
-  random_offset_x = Math.random() * 100 - 50;
-  random_offset_y = Math.random() * 100 - 50;
+  random_offset_x = Math.randomBetween(-50, 50);
+  random_offset_y = Math.randomBetween(-50, 50);
   switch (side) {
     case 'bottom':
       y = window.innerHeight + 200;
@@ -71,11 +71,13 @@ throw_card = function(value, suit, side) {
   }
   card.position = new PIXI.Point(x, y);
   stage.addChild(card);
-  return new TWEEN.Tween(card).to({
-    x: window.innerWidth / 2 + random_offset_x,
-    y: window.innerHeight / 2 + random_offset_y,
-    rotation: Math.random() * 10 - 5
-  }, 850).easing(TWEEN.Easing.Circular.Out).start();
+  return setTimeout(function() {
+    return new TWEEN.Tween(card).to({
+      x: window.innerWidth / 2 + random_offset_x,
+      y: window.innerHeight / 2 + random_offset_y,
+      rotation: Math.randomBetween(-5, 5)
+    }, 850).easing(TWEEN.Easing.Circular.Out).start();
+  }, 200);
 };
 
 create_card = function(value, suit) {
@@ -100,6 +102,22 @@ Chromecast methods
 
 on_message = function(event) {
   return throw_card(event.data.value, event.data.suit, event.data.side);
+};
+
+
+/*
+Util methods
+ */
+
+Array.prototype.random = function() {
+  if (this.length === 0) {
+    return;
+  }
+  return this[Math.floor(Math.random() * this.length)];
+};
+
+Math.randomBetween = function(min, max) {
+  return Math.random() * (max - min) + min;
 };
 
 init();
